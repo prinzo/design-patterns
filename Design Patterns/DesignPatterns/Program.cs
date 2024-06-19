@@ -11,15 +11,9 @@ builder.Services.AddSwaggerGen();
 #region Factory
 // Create an instance of BeverageMakerFactory
 var beverageMakerFactory = new BeverageMakerFactory();
-
-// Register each BeverageMaker with the factory
-beverageMakerFactory.RegisterBeverageMaker(BeverageType.Coffee, new CoffeeMaker());
-beverageMakerFactory.RegisterBeverageMaker(BeverageType.Tea, new TeaMaker());
-beverageMakerFactory.RegisterBeverageMaker(BeverageType.Soda, new SodaMaker());
-
 builder.Services.AddSingleton<IBeverageMaker>(
     s => beverageMakerFactory
-        .GetBeverageMaker((BeverageType)Convert.ToInt32(builder.Configuration["FactorySettings:BeverageType"])));
+        .CreateBeverageMaker((BeverageType)Convert.ToInt32(builder.Configuration["FactorySettings:BeverageType"])));
 
 #endregion
 
